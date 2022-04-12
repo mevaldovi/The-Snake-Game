@@ -16,10 +16,9 @@ class Snake(tk.Canvas): # creating Canvas widgets to display text, lines, & grap
 
                 self.food_image = Image.open("./assets/food.png")
                 self.food_image = ImageTk.PhotoImage(self.food_image)
-            except
-                    IOError as error:
-                    print(error)
-                    root.destroy()
+            except IOError as error:
+                    print(error) # js eqivalent of console.log(err)
+                    root.destroy() # close windown and stop application
 
 root = tk.Tk()
 root.title("Snake")
