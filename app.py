@@ -1,5 +1,4 @@
-import tkinter as tk 
-# providing classes for defining later
+import tkinter as tk # providing classes for defining later
 from PIL import Image, ImageTk
 
 class Snake(tk.Canvas): # creating Canvas widgets to display text, lines, & graphics

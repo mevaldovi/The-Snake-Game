@@ -1,17 +1,13 @@
 # Snake-And-Ladder
 
-
 [Deployed Application - URL HERE](URL HERE)
 
 # Description
 
 In the year 2021, it is difficult to find a true recreation of the early personal computer adventure.
-
 The goal of this project is to give the user a nostalgic Snake-and-Ladder computer experience.
 
 # Installation
-
-
 
 
  ## Screen Shots
@@ -23,6 +19,7 @@ The goal of this project is to give the user a nostalgic Snake-and-Ladder comput
 Python
 
 # Usage
+
 
 ## Credits
 
