@@ -26,3 +26,5 @@ root.resizable(False, False) #  tells window manager whether this is resizeable
 board = Snake()
 
 root.mainloop() #calling the mainloop of tk
+
+# wont let me install pillow hat is going on??
