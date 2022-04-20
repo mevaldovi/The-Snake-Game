@@ -27,4 +27,4 @@ board = Snake()
 
 root.mainloop() #calling the mainloop of tk
 
-# wont let me install pillow hat is going on??
+# wont let me install pillow what is going on??
