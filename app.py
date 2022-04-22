@@ -19,6 +19,7 @@ class Snake(tk.Canvas): # creating Canvas widgets to display text, lines, & grap
                     print(error) # js eqivalent of console.log(err)
                     root.destroy() # close windown and stop application
 
+# some-code-here
 root = tk.Tk()
 root.title("Snake")
 root.resizable(False, False) #  tells window manager whether this is resizeable
