@@ -16,7 +16,7 @@ The goal of this project is to give the user a nostalgic "Eating Snake" computer
 
 # Technologies Used
 
-[<img align="left" alt="medium" src="https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue" />](https://docs.python.org/)
+[<img alt="medium" src="https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue" />](https://docs.python.org/)
 
 `==============`
 
