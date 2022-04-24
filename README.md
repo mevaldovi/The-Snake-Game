@@ -19,10 +19,20 @@ The goal of this project is to give the user a nostalgic "Eating Snake" computer
 Python
 
 # Usage
+Instructions are in progress and will be displayed here upon completion.
 
 
 ## Credits
 
 This project was made possible thanks to the following people who inspired this game's recreation:
 [https://www.youtube.com/watch?v=yB1aSBM8fvI&t=218s](https://www.youtube.com/watch?v=yB1aSBM8fvI&t=218s)
+
+# Contact Me
+
+Github: [https://github.com/mevaldovi](https://github.com/mevaldovi)
+
+LinkedIn : [https://www.linkedin.com/in/marie-valdovinos-a616b21b1/](https://www.linkedin.com/in/marie-valdovinos-a616b21b1)
+
+
+Shoot me an email:[mevaldovi@gmail.com](mailto:mevaldovi@gmail.com)
 
