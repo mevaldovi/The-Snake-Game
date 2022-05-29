@@ -25,6 +25,7 @@ root.title("Snake")
 root.resizable(False, False) #  tells window manager whether this is resizeable
 
 board = Snake()
+board.pack() # organiz widgets in blocks before placing them in the parent widge
 
 root.mainloop() #calling the mainloop of tk
 
