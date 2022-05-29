@@ -10,6 +10,7 @@ class Snake(tk.Canvas): # creating Canvas widgets to display text, lines, & grap
 
         self.load_assets()
         self.create_objects()
+        self.score=0
 
         def load_assets(self):
             # define our method to allow the app to load images
@@ -26,6 +27,8 @@ class Snake(tk.Canvas): # creating Canvas widgets to display text, lines, & grap
 def create_objects(self):
     for x_position, y_position in self.snake_positions:
         self.create_image(x_position, y_position, image=self.snake_body, tag="snake")
+
+        self.create_image(self.food_position[0], self.food_position[1], image=self.food, tag="food")
 
 
 
