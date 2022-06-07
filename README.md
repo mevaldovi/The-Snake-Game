@@ -2,16 +2,15 @@
 
 [Deployed Application - URL HERE](URL HERE)
 
+<img width="305" alt="snake-game" src="https://user-images.githubusercontent.com/83307023/171522750-95c3deaf-8b7c-42c1-be22-36f22c7b8b94.png">
+
+
 # Description
 
 In the year 2021, it is difficult to find a true recreation of the early personal computer adventure.
-The goal of this project is to give the user a nostalgic "Eating Snake" computer experience.
+The goal of this project is to give the user a nostalgic Snake Game computer experience.
 
 # Installation
-
-
- ## Screen Shots
-<!--  ![alt text](public\images\screenshot-name-here) -->
 
 
 # Technologies Used
