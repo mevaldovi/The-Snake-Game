@@ -1,6 +1,6 @@
 import tkinter as tk  # providing classes for defining later
 from PIL import Image, ImageTk
-
+MOVE_INCREMENT = 20
 
 class Snake(tk.Canvas):  # creating Canvas widgets to display text, lines, & graphics
     def __init__(self):  # constructing a parent widget
@@ -8,7 +8,6 @@ class Snake(tk.Canvas):  # creating Canvas widgets to display text, lines, & gra
 
         self.snake_positions = [(100, 100), (80, 100), (60, 100)]
         self.food_position = (200, 100)
-
         self.load_assets()
         self.create_objects()
         self.score = 0
@@ -24,7 +23,6 @@ class Snake(tk.Canvas):  # creating Canvas widgets to display text, lines, & gra
                 print(error)  # js eqivalent of console.log(err)
                 root.destroy()  # close window and stop application
 
-
 def create_objects(self):
     self.create_text(
         45, 12, text="Score" {self.score}, tag="score", fill="#fff", font=("TkDefaultFont", 14)
@@ -35,7 +33,11 @@ def create_objects(self):
         self.create_image(
             self.food_position[0], self.food_position[1], image=self.food, tag="food")
         self.create_rectangle(7, 27, 593, 693, outline="#525d69")
-
+        def move_snake(self): head_x_position, head_y_position = self.snake_positions[0]
+        new_head_position = (head_x_position + MOVE_INCREMENT, head_y_position)
+        self.snake_positions = [new_head_position] + self.snake_positions[:-1] # reposition all elements of snake-body except last one
+        for segment, position in zip(self.find_withtag("snake"), self.snake_positions):
+            self.coords(segment, position)
 
 # some-code-here
 root = tk.Tk()
