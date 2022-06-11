@@ -1,6 +1,8 @@
 import tkinter as tk  # providing classes for defining later
 from PIL import Image, ImageTk
 MOVE_INCREMENT = 20
+MOVES_PER_SECOND = 15
+GAME_SPEED = 1000  # MOVES PER SECOND
 
 
 class Snake(tk.Canvas):  # creating Canvas widgets to display text, lines, & graphics
@@ -40,13 +42,27 @@ def create_objects(self):
             self): head_x_position, head_y_position = self.snake_positions[0]
         new_head_position = (head_x_position + MOVE_INCREMENT, head_y_position)
         # reposition all elements of snake-body except last one
+
         self.snake_positions = [new_head_position] + self.snake_positions[:-1]
+
         for segment, position in zip(self.find_withtag("snake"), self.snake_positions):
             self.coords(segment, position)
 
             def perform_actions(self):  # equivalent to setTimeout method in JS
+                if self.check_collisions():
+                    return
+
                 self.move_snake()
-                self.after(75, self.perform_actions)
+                self.after(GAME_SPEED, self.perform_actions)
+
+            def check_collisions(self):
+                head_x_position, head_y_position = self.snake_position[0]
+
+                return (
+                    head_x_position in (0, 600)
+                    or head_y_position in (20, 620)
+                    or head_x_position, head_y_position in self.snake_positions[1:]
+                )
 
 
 # some-code-here
