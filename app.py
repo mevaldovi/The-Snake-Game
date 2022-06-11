@@ -14,6 +14,8 @@ class Snake(tk.Canvas):  # creating Canvas widgets to display text, lines, & gra
         self.load_assets()
         self.create_objects()
         self.score = 0
+        self.direction = "Right"
+        self.bind_all("<Key", self.on_key_press)
 
         def load_assets(self):
             # define our method to allow the app to load images
@@ -40,8 +42,22 @@ def create_objects(self):
 
         def move_snake(
             self): head_x_position, head_y_position = self.snake_positions[0]
-        new_head_position = (head_x_position + MOVE_INCREMENT, head_y_position)
+
         # reposition all elements of snake-body except last one
+
+        if self.direction == "Left":
+            new_head_position = (
+                head_x_position - MOVE_INCREMENT, head_y_position)
+            elif self.direction == "Right":
+                new_head_position = (
+                    head_x_position + MOVE_INCREMENT, head_y_position)
+                   elif self.direction == "Down":
+                        new_head_position = (
+                            head_x_position, head_y_position + MOVE_INCREMENT)
+                    elif self.direction == "Up":
+                        new_head_position = (
+                            head_x_position, head_y_position - MOVE_INCREMENT)
+
 
         self.snake_positions = [new_head_position] + self.snake_positions[:-1]
 
@@ -63,6 +79,14 @@ def create_objects(self):
                     or head_y_position in (20, 620)
                     or head_x_position, head_y_position in self.snake_positions[1:]
                 )
+
+            def on_key_press(self, e)
+            new_direction = e.keysym
+            all_directions = ("Up", "Down", "Left", "Right")
+            opposites = ({"Up", "Down", "Left", "Right"})
+
+            if (new_direction in all_directions):
+                self.direction = new_direction
 
 
 # some-code-here
