@@ -1,63 +1,104 @@
-import tkinter as tk  # providing classes for defining later
+import tkinter as tk
+from random import randint
 from PIL import Image, ImageTk
+
 
 MOVE_INCREMENT = 20
 MOVES_PER_SECOND = 15
-GAME_SPEED = 1000  # MOVES PER SECOND
+GAME_SPEED = 2000 // MOVES_PER_SECOND
 
 
-class Snake(tk.Canvas):  # creating Canvas widgets to display text, lines, & graphics
-    def __init__(self):  # constructing a parent widget
-        super().__init__(width=600, height=620, background="black", highlightthickness=0)
+class Snake(tk.Canvas):
+    def __init__(self):
+        super().__init__(
+            width=600, height=620, background="black", highlightthickness=0
+        )
 
         self.snake_positions = [(100, 100), (80, 100), (60, 100)]
-        self.food_position = (200, 100)
+        self.food_position = self.set_new_food_position()
+        self.direction = "Right"
+
+        self.score = 0
+
         self.load_assets()
         self.create_objects()
-        self.score = 0
-        self.direction = "Right"
-        self.bind_all("<Key", self.on_key_press)
+
+        self.bind_all("<Key>", self.on_key_press)
 
         self.pack()
 
-        def load_assets(self):
-            # define our method to allow the app to load images
-            try:
-                self.snake_body_image = Image.open("./assets/snake.png")
-                self.snake_body = ImageTk.PhotoImage(self.snake_body_image)
-                self.food_image = Image.open("./assets/food.png")
-                self.food_image = ImageTk.PhotoImage(self.food_image)
-            except IOError as error:
-                print(error)  # js eqivalent of console.log(err)
-                # root.destroy()  # close window and stop application
-                raise
+        self.after(GAME_SPEED, self.perform_actions)
 
+    def load_assets(self):
+        try:
+            self.snake_body_image = Image.open("./assets/snake.png")
+            self.snake_body = ImageTk.PhotoImage(self.snake_body_image)
 
-def create_objects(self):
-    self.create_text(
-        45, 12, text="Score: {self.score}", tag="score", fill="#fff", font=10)
-    for x_position, y_position in self.snake_positions:
-        self.create_image(x_position, y_position,
-                          image=self.snake_body, tag="snake")
-        self.create_image(
-            self.food_position[0], self.food_position[1], image=self.food, tag="food")
-        self.create_rectangle(7, 27, 593, 693, outline="#525d69")
+            self.food_image = Image.open("./assets/food.png")
+            self.food = ImageTk.PhotoImage(self.food_image)
+        except IOError as error:
+            root.destroy()
+            # end game & close window
+            raise
 
-        def move_snake(self):
-            head_x_position, head_y_position = self.snake_positions[0]
+    def create_objects(self):
+        self.create_text(
+            35, 12, text=f"Score: {self.score}", tag="score", fill="#fff", font=10
+        )
+
+        for x_position, y_position in self.snake_positions:
+            self.create_image(
+                x_position, y_position, image=self.snake_body, tag="snake"
+            )
+
+        self.create_image(*self.food_position, image=self.food, tag="food")
+        self.create_rectangle(7, 27, 593, 613, outline="#525d69")
+
+    def check_collisions(self):
+        head_x_position, head_y_position = self.snake_positions[0]
+
+        return (
+            head_x_position in (0, 600)
+            or head_y_position in (20, 620)
+            or (head_x_position, head_y_position) in self.snake_positions[1:]
+        )
+
+    def check_food_collision(self):
+        if self.snake_positions[0] == self.food_position:
+            self.score += 1
+            self.snake_positions.append(self.snake_positions[-1])
+
+            self.create_image(
+                *self.snake_positions[-1], image=self.snake_body, tag="snake"
+            )
+            self.food_position = self.set_new_food_position()
+            self.coords(self.find_withtag("food"), *self.food_position)
+
+            score = self.find_withtag("score")
+            self.itemconfigure(score, text=f"Score: {self.score}", tag="score")
+
+    def end_game(self):
+        self.delete(tk.ALL)
+        self.create_text(
+            self.winfo_width() / 2,
+            self.winfo_height() / 2,
+            text=f"Game over! You scored {self.score}!",
+            fill="#fff",
+            font=14
+        )
+
+# define snake head movements & positioning
+    def move_snake(self):
+        head_x_position, head_y_position = self.snake_positions[0]
 
         if self.direction == "Left":
-            new_head_position = (
-                head_x_position - MOVE_INCREMENT, head_y_position)
+            new_head_position = (head_x_position - MOVE_INCREMENT, head_y_position)
         elif self.direction == "Right":
-            new_head_position = (
-                head_x_position + MOVE_INCREMENT, head_y_position)
+            new_head_position = (head_x_position + MOVE_INCREMENT, head_y_position)
         elif self.direction == "Down":
-            new_head_position = (
-                head_x_position, head_y_position + MOVE_INCREMENT)
+            new_head_position = (head_x_position, head_y_position + MOVE_INCREMENT)
         elif self.direction == "Up":
-            new_head_position = (
-                head_x_position, head_y_position - MOVE_INCREMENT)
+            new_head_position = (head_x_position, head_y_position - MOVE_INCREMENT)
 
         self.snake_positions = [new_head_position] + self.snake_positions[:-1]
 
@@ -67,58 +108,41 @@ def create_objects(self):
     def on_key_press(self, e):
         new_direction = e.keysym
 
-        # def move_snake(
-        #     self): head_x_position, head_y_position = self.snake_positions[0]
+        all_directions = ("Up", "Down", "Left", "Right")
+        opposites = ({"Up", "Down"}, {"Left", "Right"})
 
-        # # reposition all elements of snake-body except last one
+        if (
+            new_direction in all_directions
+            and {new_direction, self.direction} not in opposites
+        ):
+            self.direction = new_direction
 
-        # if self.direction == "Left":
-        #     new_head_position = (
-        #         head_x_position - MOVE_INCREMENT, head_y_position)
-        #     elif self.direction == "Right":
-        #         new_head_position = (
-        #             head_x_position + MOVE_INCREMENT, head_y_position)
-        #            elif self.direction == "Down":
-        #                 new_head_position = (
-        #                     head_x_position, head_y_position + MOVE_INCREMENT)
-        #             elif self.direction == "Up":
-        #                 new_head_position = (
-        #                     head_x_position, head_y_position - MOVE_INCREMENT)
+    def perform_actions(self):
+        if self.check_collisions():
+            # ^^true or false
+            self.end_game()
 
-        # self.snake_positions = [new_head_position] + self.snake_positions[:-1]
+        self.check_food_collision()
+        self.move_snake()
 
-        for segment, position in zip(self.find_withtag("snake"), self.snake_positions):
-            self.coords(segment, position)
+        self.after(GAME_SPEED, self.perform_actions)
 
-            def perform_actions(self):  # equivalent to setTimeout method in JS
-                if self.check_collisions():
-                    return
+    def set_new_food_position(self):
+        # repositioning the food after snake eats it
+        while True:
+            x_position = randint(1, 29) * MOVE_INCREMENT
+            y_position = randint(3, 30) * MOVE_INCREMENT
+            food_position = (x_position, y_position)
 
-                self.move_snake()
-                self.after(GAME_SPEED, self.perform_actions)
-
-            def check_collisions(self):
-                head_x_position, head_y_position = self.snake_position[0]
-
-                return (
-                    head_x_position in (0, 600)
-                    or head_y_position in (20, 620)
-                    or head_x_position, head_y_position in self.snake_positions[1:]
-                )
-
-            all_directions = ("Up", "Down", "Left", "Right")
-            opposites = ({"Up", "Down", "Left", "Right"})
-
-            if (new_direction in all_directions):
-                self.direction = new_direction
+            if food_position not in self.snake_positions:
+                return food_position
 
 
-# some-code-here
 root = tk.Tk()
 root.title("Snake")
-root.resizable(False, False)  # tells window manager whether this is resizeable
+root.resizable(False, False)
+root.tk.call("tk", "scaling", 4.0)
 
 board = Snake()
-board.pack()  # organiz widgets in blocks before placing them in the parent widge
 
-root.mainloop()  # calling the mainloop of tk
+root.mainloop()
