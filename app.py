@@ -31,8 +31,7 @@ class Snake(tk.Canvas):  # creating Canvas widgets to display text, lines, & gra
 
 def create_objects(self):
     self.create_text(
-        45, 12, text="Score" {self.score}, tag="score", fill="#fff", font=("TkDefaultFont", 14)
-    )
+        45, 12, text="Score", tag="score", fill="#fff", font=10)
     for x_position, y_position in self.snake_positions:
         self.create_image(x_position, y_position,
                           image=self.snake_body, tag="snake")
