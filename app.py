@@ -1,5 +1,6 @@
 import tkinter as tk  # providing classes for defining later
 from PIL import Image, ImageTk
+
 MOVE_INCREMENT = 20
 MOVES_PER_SECOND = 15
 GAME_SPEED = 1000  # MOVES PER SECOND
@@ -17,6 +18,8 @@ class Snake(tk.Canvas):  # creating Canvas widgets to display text, lines, & gra
         self.direction = "Right"
         self.bind_all("<Key", self.on_key_press)
 
+        self.pack()
+
         def load_assets(self):
             # define our method to allow the app to load images
             try:
@@ -26,12 +29,13 @@ class Snake(tk.Canvas):  # creating Canvas widgets to display text, lines, & gra
                 self.food_image = ImageTk.PhotoImage(self.food_image)
             except IOError as error:
                 print(error)  # js eqivalent of console.log(err)
-                root.destroy()  # close window and stop application
+                # root.destroy()  # close window and stop application
+                raise
 
 
 def create_objects(self):
     self.create_text(
-        45, 12, text="Score", tag="score", fill="#fff", font=10)
+        45, 12, text="Score: {self.score}", tag="score", fill="#fff", font=10)
     for x_position, y_position in self.snake_positions:
         self.create_image(x_position, y_position,
                           image=self.snake_body, tag="snake")
@@ -39,26 +43,49 @@ def create_objects(self):
             self.food_position[0], self.food_position[1], image=self.food, tag="food")
         self.create_rectangle(7, 27, 593, 693, outline="#525d69")
 
-        def move_snake(
-            self): head_x_position, head_y_position = self.snake_positions[0]
-
-        # reposition all elements of snake-body except last one
+        def move_snake(self):
+            head_x_position, head_y_position = self.snake_positions[0]
 
         if self.direction == "Left":
             new_head_position = (
                 head_x_position - MOVE_INCREMENT, head_y_position)
-            elif self.direction == "Right":
-                new_head_position = (
-                    head_x_position + MOVE_INCREMENT, head_y_position)
-                   elif self.direction == "Down":
-                        new_head_position = (
-                            head_x_position, head_y_position + MOVE_INCREMENT)
-                    elif self.direction == "Up":
-                        new_head_position = (
-                            head_x_position, head_y_position - MOVE_INCREMENT)
-
+        elif self.direction == "Right":
+            new_head_position = (
+                head_x_position + MOVE_INCREMENT, head_y_position)
+        elif self.direction == "Down":
+            new_head_position = (
+                head_x_position, head_y_position + MOVE_INCREMENT)
+        elif self.direction == "Up":
+            new_head_position = (
+                head_x_position, head_y_position - MOVE_INCREMENT)
 
         self.snake_positions = [new_head_position] + self.snake_positions[:-1]
+
+        for segment, position in zip(self.find_withtag("snake"), self.snake_positions):
+            self.coords(segment, position)
+
+    def on_key_press(self, e):
+        new_direction = e.keysym
+
+        # def move_snake(
+        #     self): head_x_position, head_y_position = self.snake_positions[0]
+
+        # # reposition all elements of snake-body except last one
+
+        # if self.direction == "Left":
+        #     new_head_position = (
+        #         head_x_position - MOVE_INCREMENT, head_y_position)
+        #     elif self.direction == "Right":
+        #         new_head_position = (
+        #             head_x_position + MOVE_INCREMENT, head_y_position)
+        #            elif self.direction == "Down":
+        #                 new_head_position = (
+        #                     head_x_position, head_y_position + MOVE_INCREMENT)
+        #             elif self.direction == "Up":
+        #                 new_head_position = (
+        #                     head_x_position, head_y_position - MOVE_INCREMENT)
+
+        # self.snake_positions = [new_head_position] + self.snake_positions[:-1]
 
         for segment, position in zip(self.find_withtag("snake"), self.snake_positions):
             self.coords(segment, position)
@@ -79,8 +106,6 @@ def create_objects(self):
                     or head_x_position, head_y_position in self.snake_positions[1:]
                 )
 
-            def on_key_press(self, e)
-            new_direction = e.keysym
             all_directions = ("Up", "Down", "Left", "Right")
             opposites = ({"Up", "Down", "Left", "Right"})
 
